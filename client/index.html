@@ -1,0 +1,352 @@
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hyperledger Fabric Program Market</title>
+    <!--link rel="icon" href="favicon.png" type="image/gif"-->
+
+    <!-- require jquery and bootstrap scripts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    
+    <!-- adding style here -->
+    <style type="text/css">
+      header{
+        width:100%;  
+        background-color: lightgray;
+        font-size:20px;
+        padding:15px;
+      }
+      header, .form-group{
+        margin-bottom: 3%;
+      }
+      .form-group{
+        width:50%;
+      }
+      #body{
+        margin-left:3%;
+        margin-right:3%;
+      }
+      .form-control{
+        margin: 8px;
+      }
+      #right_header{
+        width:40%;
+        font-size:15px;
+        margin-right:0px;
+      }
+      #left_header{
+        margin-left:0;
+        width:40%;
+        display:inline;
+      } 
+      #id {
+        width:49%;
+        display: inline-block;
+      }
+      table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+      }
+      td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+      }
+      tr:nth-child(even) {
+          background-color: #dddddd;
+      }
+        
+      ul{
+            display:inline-block;
+      }
+      ul li{
+            display:inline;margin:0px 15px 0px 15px ;      
+      }
+        
+    </style>
+  </head>
+  <body ng-app="application" ng-controller="appController" onload="ShowTime()">
+    <header>
+        <div class="row">
+            <a class="col-lg-8" href="index.html"><div id="left_header">Hyperledger Fabric Program Market</div></a>
+            <ul class="col-lg-4">
+                <a href="index.html"><li>Home</li></a><span/>
+                <a href="User.html"><li>User</li></a>
+                <a href="#"><li>Login</li></a>
+            </ul>
+        </div>
+        <div class="row">
+            <i class="col-lg-4" id="right_header">Blockchain Application for Program Market</i>
+            <div class="col-lg-4"> </div>
+            <ul class="col-lg-4 col-lg-offset-3"><li id="showbox"> </li></ul>
+        </div>
+    </header>
+
+    <div id="body">
+        
+      <div class="form-group">
+        <label>Init Ledger(初始化帳本)</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{initLedger}}</h5>
+        <br>
+        <!--Enter catch id: <input class="form-control" type="text" placeholder="Ex: 11" ng-model="alo.UserID">-->
+        <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="initLedger()"> 
+      </div>
+      <div class="form-group">
+        <label>Buy Data4(購買資料使用權)</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{invoke_invokeData_Data4}}</h5>
+        <br>
+        <!--Enter catch id: <input class="form-control" type="text" placeholder="Ex: 11" ng-model="alo.UserID">-->
+        <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="invoke_invokeData_Data4()"> 
+      </div>
+        <!--
+      <div class="form-group">
+        <label>Create AHUser_200(產生平台USER)</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{invoke_iPostAHUser_200}}</h5>
+        <br>
+        <!--Enter catch id: <input class="form-control" type="text" placeholder="Ex: 11" ng-model="alo.UserID">-->
+       <!-- <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="invoke_iPostAHUser_200()"> 
+      </div>
+        
+      <div class="form-group">
+        <label>Create TRDUser_300(產生賣家USER)</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{invoke_iPostUser_300}}</h5>
+        <br>
+        <!--Enter catch id: <input class="form-control" type="text" placeholder="Ex: 11" ng-model="alo.UserID">-->
+       <!-- <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="invoke_iPostUser_300()"> 
+      </div>
+        
+      <div class="form-group">
+        <label>Create Specific User Record(產生使用者)</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{invoke_iPostUserSpe}}</h5>
+        <br>
+        Enter User id: <input class="form-control" type="text" placeholder="Ex: 100" ng-model="alo.UserID">
+        Enter RecType: <input class="form-control" type="text" placeholder="Ex: USER" ng-model="alo.RecType">
+        Enter User Name: <input id="createName" class="form-control" type="text" placeholder="Ex: Tomsawyer" ng-model="alo.Name"> 
+        Enter UserType: <input id="createName" class="form-control" type="text" placeholder="Ex: TRD" ng-model="alo.UserType">
+        Enter User Address: <input class="form-control" type="text" placeholder="Ex: New York" ng-model="alo.Address">
+        Enter Phone: <input class="form-control" type="text" placeholder="Ex: 0911222333" ng-model="alo.Phone">
+        Enter Email: <input class="form-control" type="text" placeholder="Ex: XXX@gmail.com" ng-model="alo.Email">
+        Enter Bank: <input class="form-control" type="text" placeholder="Ex: Citibank" ng-model="alo.Bank">
+        Enter AccountNo: <input class="form-control" type="text" placeholder="Ex: 0001732345" ng-model="alo.AccountNo">
+        Enter RoutingNo: <input class="form-control" type="text" placeholder="Ex: 0234678" ng-model="alo.RoutingNo">
+        <!--Enter Timestamp: <input class="form-control" type="text" placeholder="Ex: 20171201" ng-model="alo.Timestamp">-->
+       <!-- <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="invoke_iPostUserSpe()"> 
+      </div>-->
+
+      <div class="form-group">
+        <label>Query Data Data1(查詢一筆資料)</label><br>
+        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid Data Key</h5>
+        
+        <!--Enter a catch number: <input id="createName" class="form-control" type="text" placeholder="Ex: 3" ng-model="alo_UserID">-->
+        <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="query_queryData_Data1()">
+      </div>
+
+      <table id="query_queryData_Data1" class="table" align="center">
+
+        <tr>
+          <th>Name</th>
+          <th>Product</th>
+          <th>Frequency</th>
+          <th>TimeStamp</th>
+          <th>OwnerID</th>
+        </tr>
+
+        <tr>
+          <td>{{query_queryData_Data1.Name}}</td>
+          <td>{{query_queryData_Data1.Product}}</td>
+          <td>{{query_queryData_Data1.Frequency}}</td>
+          <td>{{query_queryData_Data1.TimeStamp}}</td>
+          <td>{{query_queryData_Data1.OwnerID}}</td>
+        </tr>
+          
+      </table>    
+        
+      <div class="form-group">
+        <label>Query All Datas(查詢所有資料)</label><br>
+        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid Data Key</h5>
+        
+        <!--Enter a catch number: <input id="createName" class="form-control" type="text" placeholder="Ex: 3" ng-model="alo_UserID">-->
+        <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="query_queryAllDatas()">
+      </div>
+
+      <table id="query_queryAllDatas" class="table" align="center">
+
+        <tr>
+          <th>Name</th>
+          <th>Product</th>
+          <th>Frequency</th>
+          <th>TimeStamp</th>
+          <th>OwnerID</th>
+        </tr>
+
+        <tr>
+          <td>{{query_queryAllDatas[0].Name}}</td>
+          <td>{{query_queryAllDatas[0].Product}}</td>
+          <td>{{query_queryAllDatas[0].Frequency}}</td>
+          <td>{{query_queryAllDatas[0].TimeStamp}}</td>
+          <td>{{query_queryAllDatas[0].OwnerID}}</td>
+        </tr>
+        <tr>
+          <td>{{query_queryAllDatas[1].Name}}</td>
+          <td>{{query_queryAllDatas[1].Product}}</td>
+          <td>{{query_queryAllDatas[1].Frequency}}</td>
+          <td>{{query_queryAllDatas[1].TimeStamp}}</td>
+          <td>{{query_queryAllDatas[1].OwnerID}}</td>
+        </tr>
+        <tr>
+          <td>{{query_queryAllDatas[2].Name}}</td>
+          <td>{{query_queryAllDatas[2].Product}}</td>
+          <td>{{query_queryAllDatas[2].Frequency}}</td>
+          <td>{{query_queryAllDatas[2].TimeStamp}}</td>
+          <td>{{query_queryAllDatas[2].OwnerID}}</td>
+        </tr>
+        <tr>
+          <td>{{query_queryAllDatas[3].Name}}</td>
+          <td>{{query_queryAllDatas[3].Product}}</td>
+          <td>{{query_queryAllDatas[3].Frequency}}</td>
+          <td>{{query_queryAllDatas[3].TimeStamp}}</td>
+          <td>{{query_queryAllDatas[3].OwnerID}}</td>
+        </tr>
+          
+      </table>
+<!--
+        <div class="form-group">
+        <label>Query a Specific User(查詢使用者)</label><br>
+        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid User Id</h5>
+        
+        Enter an User Id: <input id="createName" class="form-control" type="text" placeholder="Ex: 3" ng-model="alo_UserID">
+        <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="query_qGetUserSpe()">
+      </div>
+
+      <table id="query_qGetUserSpe" class="table" align="center">
+
+        <tr>
+          <th>UserID</th>
+          <th>RecType</th>
+          <th>Name</th>
+          <th>UserType</th>
+          <th>Address</th>
+        </tr>
+
+        <tr>
+          <td>{{query_qGetUserSpe.UserID}}</td>
+          <td>{{query_qGetUserSpe.RecType}}</td>
+          <td>{{query_qGetUserSpe.Name}}</td>
+          <td>{{query_qGetUserSpe.UserType}}</td>
+          <td>{{query_qGetUserSpe.Address}}</td>
+        </tr>
+          
+         <tr>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Bank</th>
+          <th>AccountNo</th>
+          <th>RoutingNo</th>
+          <th>Timestamp</th>
+        </tr>
+        <tr>
+          <td>{{query_qGetUserSpe.Phone}}</td>
+          <td>{{query_qGetUserSpe.Email}}</td>
+          <td>{{query_qGetUserSpe.Bank}}</td>
+          <td>{{query_qGetUserSpe.AccountNo}}</td>
+          <td>{{query_qGetUserSpe.RoutingNo}}</td>
+          <td>{{query_qGetUserSpe.Timestamp}}</td>
+        </tr> 
+      </table>
+    -->    
+      <!--<div class="form-group">
+        <label>Change Tuna Holder</label><br>
+        <h5 style="color:green;margin-bottom:2%" id="success_holder">Success! Tx ID: {{change_holder}}</h5>
+        <h5 style="color:red;margin-bottom:2%" id="error_holder">Error: Please enter a valid Tuna Id</h5>
+        Enter a catch id between 1 and 10: <input class="form-control" name="assetSelect" placeholder="Ex: 1" ng-model="holder.id">
+        Enter name of new holder: <input class="form-control" name="assetSelect" placeholder="Ex: Barry" ng-model="holder.name">
+        <input id="transferSubmit" type="submit" value="Change" class="btn btn-primary" ng-click="changeHolder()">
+      </div>-->
+        <!--
+      <div class="form-group">
+        <label>Create Item_1000 (產生程式商品(已填好))</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{invoke_iPostItem_1000}}</h5>
+        <br>-->
+        <!--Enter catch id: <input class="form-control" type="text" placeholder="Ex: 11" ng-model="alo.UserID">-->
+        <!--
+        <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="invoke_iPostItem_1000()"> 
+      </div>
+        
+      <div class="form-group">
+        <label>Create Specific Item (產生程式商品)</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{invoke_iPostItemSpe}}</h5>
+        <br>
+        Enter Item id: <input class="form-control" type="text" placeholder="Ex: 1000" ng-model="aloItem.ItemID">
+        Enter ItemRecType: <input class="form-control" type="text" placeholder="Ex: ARTINV" ng-model="aloItem.ItemRecType">
+        Enter Item Description: <input id="createName" class="form-control" type="text" placeholder="Ex: high profit" ng-model="aloItem.ItemDesc"> 
+        Enter Item Detail: <input id="createName" class="form-control" type="text" placeholder="Ex: RNN AI alogorithm" ng-model="aloItem.ItemDetail">
+        Enter Item Date: <input class="form-control" type="text" placeholder="Ex: 2016-12-01" ng-model="aloItem.ItemDate">
+        Enter Item Type: <input class="form-control" type="text" placeholder="Ex: AI 、 CA" ng-model="aloItem.ItemType">
+        Enter Item Subject: <input class="form-control" type="text" placeholder="Ex:CNN、RNN、RL、MA、KD " ng-model="aloItem.ItemSubject">
+        Enter Item Performance: <input class="form-control" type="text" placeholder="Ex: 05.15 %/year" ng-model="aloItem.ItemMedia">
+        Enter Item Size: <input class="form-control" type="text" placeholder="Ex: 25KB" ng-model="aloItem.ItemSize">
+        Enter ItemPicFN: <input class="form-control" type="text" placeholder="Ex: item-001.jpg" ng-model="aloItem.ItemPicFN">
+        Enter ItemBasePrice: <input class="form-control" type="text" placeholder="Ex: 500000" ng-model="aloItem.ItemBasePrice">
+        Enter CurrentOwnerID: <input class="form-control" type="text" placeholder="Ex: 100" ng-model="aloItem.ItemCurrentOwnerID">
+        <!--Enter ItemTimestamp: <input class="form-control" type="text" placeholder="Ex: 20171201" ng-model="aloItem.ItemTimestamp">-->
+        <!--<input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="invoke_iPostItemSpe()"> 
+      </div>
+        
+      <div class="form-group">
+        <label>Create AuctionRequest_1111(註冊商品上架(已填好))</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{invoke_iPostAuctionRequest_1111}}</h5>
+        <br>
+        <!--Enter catch id: <input class="form-control" type="text" placeholder="Ex: 11" ng-model="alo.UserID">-->
+        <!--<input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="invoke_iPostAuctionRequest_1111()"> 
+      </div>
+        
+      <div class="form-group">
+        <label>Create Specific AuctionRequest(註冊商品上架)</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{invoke_iPostAuctionRequestSpe}}</h5>
+        <br>
+        Enter AuctionRequest id: <input class="form-control" type="text" placeholder="Ex: 1111" ng-model="aloAuctionRequest.AuctionRequestID">
+        Enter AuctionRequestRecType: <input class="form-control" type="text" placeholder="Ex: AUCREQ" ng-model="aloAuctionRequest.RecType">
+        Enter Item id: <input id="createName" class="form-control" type="text" placeholder="Ex: 1000" ng-model="aloAuctionRequest.ItemID"> 
+        Enter AuctionHouse id: <input id="createName" class="form-control" type="text" placeholder="Ex: 200" ng-model="aloAuctionRequest.AuctionHouseID">
+        Enter Seller id: <input class="form-control" type="text" placeholder="Ex: 100" ng-model="aloAuctionRequest.SellerID">
+        Enter Request Date: <input class="form-control" type="text" placeholder="Ex: 2017-12-01" ng-model="aloAuctionRequest.RequestDate">
+        Enter Reserve Price: <input class="form-control" type="text" placeholder="Ex: 1400" ng-model="aloAuctionRequest.ReservePrice">
+        Enter Buy It Now Price: <input class="form-control" type="text" placeholder="Ex: 3600" ng-model="aloAuctionRequest.BuyItNowPrice">
+        Enter Auction Status: <input class="form-control" type="text" placeholder="Ex: INIT" ng-model="aloAuctionRequest.Status">
+        Enter Open Date: <input class="form-control" type="text" placeholder="Ex: 2017-12-02 08:05:00" ng-model="aloAuctionRequest.OpenDate">
+        Enter Close Date: <input class="form-control" type="text" placeholder="Ex: 2017-12-31 08:05:00" ng-model="aloAuctionRequest.CloseDate">
+        <!--Enter TimeStamp: <input class="form-control" type="text" placeholder="Ex: 20171201" ng-model="aloAuctionRequest.TimeStamp">-->
+        <!--<input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="invoke_iPostAuctionRequestSpe()"> 
+      </div>
+        
+      <div class="form-group">
+        <label>Open Auction Request For Bids(商品開賣)</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{invoke_iOpenAuctionRequestForBids}}</h5>
+        <br>
+        Enter AuctionRequest id: <input class="form-control" type="text" placeholder="Ex: 1111" ng-model="aloOpenAuction.AuctionRequestID">
+        Enter OpenAuctionRecType: <input class="form-control" type="text" placeholder="Ex: OPENAUC" ng-model="aloOpenAuction.RecType">
+        Enter Auction Time(mins): <input id="createName" class="form-control" type="text" placeholder="Ex: 10" ng-model="aloOpenAuction.AuctionTime"> 
+        <!--Enter TimeStamp: <input id="createName" class="form-control" type="text" placeholder="Ex: 2017-02-13 09:38:00" ng-model="aloOpenAuction.TimeStamp">-->
+        <!--<input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="invoke_iOpenAuctionRequestForBids()"> 
+      </div>
+        
+      <div class="form-group">
+        <label>Close Open Auctions(商品下架)</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{invoke_iCloseOpenAuctions}}</h5>
+        <br>
+        Enter Auction Year: <input class="form-control" type="text" placeholder="Ex: 2017" ng-model="aloCloseOpenAuction.AuctionYear">
+        Enter CloseAuctionRecType: <input class="form-control" type="text" placeholder="Ex: CLAUC" ng-model="aloCloseOpenAuction.RecType">
+        <!--Enter TimeStamp: <input id="createName" class="form-control" type="text" placeholder="Ex: 2017-02-13 09:38:00" ng-model="aloCloseOpenAuction.TimeStamp">-->
+        <!--<input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="invoke_iCloseOpenAuctions()"> 
+      </div>
+        -->
+    </div>
+  </body>
+    <!-- requiring the angular page -->
+    <script type="text/javascript" src="app.js"> </script>
+</html>
