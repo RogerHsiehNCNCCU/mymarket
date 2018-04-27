@@ -63,6 +63,25 @@ app.controller('appController',function($scope, appFactory){
         });
                                       
     }
+    
+    $scope.query_queryData_Spe = function(){
+        console.log("into query_queryData_Spe");
+        
+        var DataKey = $scope.qmarket_DataKey;
+        
+        appFactory.query_queryData_Spe(DataKey,function(data){
+            $scope.query_queryData_Spe = data;
+            console.log("I'm in appController specific query "+ data);
+            if($scope.query_qGetUserSpe == "Could not locate Data"){
+                console.log()
+                $("error_query").show();
+            }else{
+                $("#error_query").hide();
+            }
+        });
+                                      
+    }
+    
     /*
     $scope.query_qGetUserSpe = function(){
         console.log("into query_qGetUserSpe");
@@ -187,6 +206,16 @@ app.controller('appController',function($scope, appFactory){
             $("#success_create").show();
         });
     }
+    
+    $scope.invoke_invokeData_Spe = function(){
+        console.log("invoke_invokeData_Spe");
+        appFactory.invoke_invokeData_Spe($scope.imarket, function(data){
+            $scope.invoke_invokeData_Spe = data;
+            console.log("I'm in appController Specific Post "+ data);
+            $("#success_create").show();
+        });
+    }
+    
     /*
     $scope.invoke_iPostAHUser_200 = function(){
         console.log("into invoke_iPostAHUser_200");
@@ -334,6 +363,15 @@ app.factory('appFactory', function($http){
            callback(output) 
         });
     }
+    
+    factory.query_queryData_Spe = function(DataKey,callback){
+        console.log("before factory specific query");
+        $http.get('/queryData_Spe/'+DataKey).success(function(output){
+            console.log("I'm in factory specific query " + output);
+           callback(output) 
+        });
+    }
+    
     /*
     factory.query_qGetUserSpe = function(UserID,callback){
         console.log("before factory specific query");
@@ -398,13 +436,25 @@ app.factory('appFactory', function($http){
     
     factory.invoke_invokeData_Data4 = function(callback){
         
-       // var TimeStamp = y+"-"+mon+"-"+d+" "+h+':'+min+':'+s;
+        var TimeStamp = y+"-"+mon+"-"+d+" "+h+':'+min+':'+s;
         console.log("before factory invokeData_Data4");
-        $http.get('/invokeData_Data4').success(function(output){
+        $http.get('/invokeData_Data4/'+TimeStamp).success(function(output){
             console.log("I'm in factory invokeData_Data4 " + output);
             callback(output)
         });
     }
+    
+    factory.invoke_invokeData_Spe = function(data,callback){
+        
+        var imarket = data.Key +","+ data.Name +","+ data.Product +","+ data.Frequency +","+ data.OwnerID +","+y+"-"+mon+"-"+d+" "+h+':'+min+':'+s;
+        
+        console.log("before factory Specific Post");
+        $http.get('/invokeData_Spe/'+imarket).success(function(output){
+            console.log("I'm in factory Specific Post " + output);
+            callback(output)
+        });
+    }
+    
     /*
     factory.invoke_iPostAHUser_200 = function(callback){
         

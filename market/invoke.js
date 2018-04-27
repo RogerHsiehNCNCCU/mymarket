@@ -64,8 +64,8 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 	var request = {
 		//targets: let default to the peer assigned to the client
 		chaincodeId: 'market',
-		fcn: 'createData',//The function name to be returned when calling stub.GetFunctionAndParameters() in the target chaincode.
-		args: ['Data5','12345','12355','123','123'],//An array of string arguments specific to the chaincode's 'Invoke' method
+		fcn: 'createUser',//The function name to be returned when calling stub.GetFunctionAndParameters() in the target chaincode.
+		args: ['User1','Peng','0911-123-456'],//An array of string arguments specific to the chaincode's 'Invoke' method
 		chainId: 'mychannel',
 		txId: tx_id
 	};

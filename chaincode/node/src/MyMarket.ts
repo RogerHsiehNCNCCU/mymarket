@@ -1,6 +1,12 @@
 import {Chaincode, ChaincodeError, Helpers, StubHelper} from '@theledger/fabric-chaincode-utils';
 import * as Yup from 'yup';
 
+interface User {
+    UserID: string;
+    Name: string;
+    Phone: string;
+}
+
 export class MyMarket extends Chaincode{
     
     async queryData(stubHelper: StubHelper, args: string[]): Promise<any>{
@@ -49,6 +55,18 @@ export class MyMarket extends Chaincode{
         }
     }
     
+    async createUser(stubHelper:StubHelper, args: string[]){
+        const verifiedArgs = await Helpers.checkArgs<any>(args, Yup.object().shape({
+            UserID: Yup.string().required(),
+            Name: Yup.string().required(),
+            Phone: Yup.string().required()
+        }));
+        
+        let user = {Name: verifiedArgs.Name, Phone: verifiedArgs.Phone};
+        
+        await stubHelper.putState(verifiedArgs.UserID, user);
+    }
+    
     async createData(stubHelper:StubHelper, args: string[]){
         const verifiedArgs = await Helpers.checkArgs<any>(args, Yup.object()
         .shape({
@@ -56,23 +74,27 @@ export class MyMarket extends Chaincode{
             Name: Yup.string().required(),
             Product: Yup.string().required(),
             Frequency: Yup.string().required(),
-            OwnerID : Yup.string().required()
+            OwnerID : Yup.string().required(),
+            TimeStamp : Yup.string().required()
             //TimeStamp: Yup.date().default(function() {
                        //return new Date})
         }));
-        
+        /*
         let date = new Date();
         let mon:String = (date.getMonth()+1).toString();
         if(mon.length==1) mon = "0"+mon;
         let today = date.getFullYear()+""+mon+""+date.getDate();
-        
+        */
+        //Data加上 valid & invalid?
+        //還有資料有效期限? 1年  6個月...
         let Data = {
             docType: 'Data',
             Name: verifiedArgs.Name,
             Product: verifiedArgs.Product,
             Frequency: verifiedArgs.Frequency,
             OwnerID: verifiedArgs.OwnerID,
-            TimeStamp: today
+            TimeStamp: verifiedArgs.TimeStamp
+            //TimeStamp: today
         };
         
         await stubHelper.putState(verifiedArgs.Key, Data)
@@ -81,6 +103,13 @@ export class MyMarket extends Chaincode{
     async queryAllDatas(stubHelper: StubHelper, args:string[]): Promise<any>{
         const startKey = 'Data0';
         const endKey = 'Data999';
+        //Query the state by range
+        return await stubHelper.getStateByRangeAsList(startKey, endKey);
+    }
+    
+    async queryAllUsers(stubHelper: StubHelper, args:string[]): Promise<any>{
+        const startKey = 'User0';
+        const endKey = 'User999';
         //Query the state by range
         return await stubHelper.getStateByRangeAsList(startKey, endKey);
     }

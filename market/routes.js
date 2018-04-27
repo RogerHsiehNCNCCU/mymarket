@@ -1,3 +1,4 @@
+// var alo = require('./controller.js');
 var market = require('./controller.js');
 var qmarket = require('./querycontroller.js');
 var imarket = require('./invokecontroller.js');
@@ -10,9 +11,14 @@ module.exports = function(app){
        imarket.initLedger(req,res); 
     });
     
-    app.get('/invokeData_Data4',function(req,res){
-        console.log("I'm in routes initLedger");
+    app.get('/invokeData_Data4/:TimeStamp',function(req,res){
+        console.log("I'm in routes invokeData_Data4");
        imarket.invoke_invokeData_Data4(req,res); 
+    });
+    
+    app.get('/invokeData_Spe/:imarket',function(req,res){
+        console.log("I'm in routes Specific Post");
+       imarket.invoke_invokeData_Spe(req,res); 
     });
     
     /*app.get('/PostAHUser_200/:TimeStamp',function(req,res){
@@ -39,6 +45,12 @@ module.exports = function(app){
         console.log("I'm in routes queryData_Data1");
        qmarket.query_queryData_Data1(req,res); 
     });
+    
+    app.get('/queryData_Spe/:DataKey',function(req,res){
+        console.log("I'm in routes Specific Get");
+       qmarket.query_queryData_Spe(req,res); 
+    });
+    
     /*
     app.get('/GetUserSpe/:UserID',function(req,res){
         console.log("I'm in routes Specific Get");

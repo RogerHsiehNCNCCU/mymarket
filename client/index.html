@@ -103,6 +103,22 @@
         <!--Enter catch id: <input class="form-control" type="text" placeholder="Ex: 11" ng-model="alo.UserID">-->
         <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="invoke_invokeData_Data4()"> 
       </div>
+        
+      
+      <div class="form-group">
+        <label>Buy Specific Data(購買指定資料)</label>
+        <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{invoke_invokeData_Spe}}</h5>
+        <br>
+        Enter Data Key: <input class="form-control" type="text" placeholder="Ex: Data10" ng-model="imarket.Key">
+        Enter Product Name: <input class="form-control" type="text" placeholder="Ex: 台積電" ng-model="imarket.Name">
+        Enter Product Type: <input id="createName" class="form-control" type="text" placeholder="Ex: stock" ng-model="imarket.Product"> 
+        Enter Data Frequency: <input id="createName" class="form-control" type="text" placeholder="Ex: TRD" ng-model="imarket.Frequency">
+        Enter OwnerID: <input class="form-control" type="text" placeholder="Ex: 10005" ng-model="imarket.OwnerID">
+        <!--Enter Timestamp: <input class="form-control" type="text" placeholder="Ex: 20171201" ng-model="alo.Timestamp">-->
+        <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="invoke_invokeData_Spe()"> 
+      </div>
+        
+        
         <!--
       <div class="form-group">
         <label>Create AHUser_200(產生平台USER)</label>
@@ -212,8 +228,43 @@
           <td>{{query_queryAllDatas[3].TimeStamp}}</td>
           <td>{{query_queryAllDatas[3].OwnerID}}</td>
         </tr>
+        <tr>
+          <td>{{query_queryAllDatas[4].Name}}</td>
+          <td>{{query_queryAllDatas[4].Product}}</td>
+          <td>{{query_queryAllDatas[4].Frequency}}</td>
+          <td>{{query_queryAllDatas[4].TimeStamp}}</td>
+          <td>{{query_queryAllDatas[4].OwnerID}}</td>
+        </tr>
           
       </table>
+        
+      <div class="form-group">
+        <label>Query a Specific Data(查詢資料)</label><br>
+        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid User Id</h5>
+        
+        Enter an Data Key: <input id="createName" class="form-control" type="text" placeholder="Ex: Data1" ng-model="qmarket_DataKey">
+        <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="query_queryData_Spe()">
+      </div>
+
+      <table id="query_qGetUserSpe" class="table" align="center">
+
+        <tr>
+          <th>Name</th>
+          <th>Product</th>
+          <th>Frequency</th>
+          <th>TimeStamp</th>
+          <th>OwnerID</th>
+        </tr>
+
+        <tr>
+          <td>{{query_queryData_Spe.Name}}</td>
+          <td>{{query_queryData_Spe.Product}}</td>
+          <td>{{query_queryData_Spe.Frequency}}</td>
+          <td>{{query_queryData_Spe.TimeStamp}}</td>
+          <td>{{query_queryData_Spe.OwnerID}}</td>
+        </tr>
+      </table>
+        
 <!--
         <div class="form-group">
         <label>Query a Specific User(查詢使用者)</label><br>

@@ -56,8 +56,8 @@ console.log("Assigning transaction_id: ", transaction_id._transaction_id);
 const request = {
     chaincodeId: options.chaincode_id,
     txId: transaction_id,
-    fcn: 'queryData',
-    args: ['Data5']
+    fcn: 'queryAllUsers',
+    args: ['']
 };
 return channel.queryByChaincode(request);//Sends a proposal to one or more endorsing peers that will be handled by the chaincode. 
 }).then((query_responses) => {
