@@ -15,7 +15,7 @@ var options = {
     wallet_path: path.join(__dirname, './hfc-key-store'),//The path.join() method joins the specified path segments into one path.
     user_id: 'user1',
     channel_id: 'mychannel',
-    chaincode_id: 'market',
+    chaincode_id: 'fabcar',
     network_url: 'grpc://localhost:7051',
 };
 
@@ -56,7 +56,7 @@ console.log("Assigning transaction_id: ", transaction_id._transaction_id);
 const request = {
     chaincodeId: options.chaincode_id,
     txId: transaction_id,
-    fcn: 'queryComplicatedData',
+    fcn: 'queryAllCars',
     args: []
 };
 return channel.queryByChaincode(request);//Sends a proposal to one or more endorsing peers that will be handled by the chaincode. 

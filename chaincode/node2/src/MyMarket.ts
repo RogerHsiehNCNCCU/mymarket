@@ -85,24 +85,14 @@ export class MyMarket extends Chaincode{
         });*/
         //sort跟limit這些值沒辦法達到效果
         /*const Data = stubHelper.getQueryResultAsList({
-            "selector": {"Frequency": "Daily"},"limit":2,"skip":1,"fields":["Name","Product","Frequency"],"sort": [{"Frequency": "desc"}]
-            //,"use_index":"_design/indexNameDoc"
+            "selector": {"Frequency": "Daily"},"limit":2,"skip":1,"sort": {"Name": "desc"},"fields": ["name"]
         });*/
         const Data = stubHelper.getQueryResultAsList({
-            "selector": {"Frequency": "Daily"},"fields":["Name","Product","Frequency"],"sort": [{"Frequency": "desc"}]
-            //,"use_index":"_design/indexFrequencyDoc"
-        });
-        ////   peer chaincode query -C myc1 -n marbles -c '{"Args":["queryMarbles","{\"selector\":{\"docType\":{\"$eq\":\"marble\"},\"owner\":{\"$eq\":\"tom\"},\"size\":{\"$gt\":0}},\"fields\":[\"docType\",\"owner\",\"size\"],\"sort\":[{\"size\":\"desc\"}],\"use_index\":\"_design/indexSizeSortDoc\"}"]}'
-        
-        /*const Data = stubHelper.getQueryResultAsList({
             "selector": {"Frequency": "Daily"},"limit":2,"skip":0
-        });*/
+        });
         /*const Data = stubHelper.getQueryResultAsList({
             "selector": {"Interval": "1 y"},"limit":2,"skip":0
         });*/
-        if(!Data){
-            throw new ChaincodeError('Data does not exist');
-        }
         this.logger.info( 'ComplicatedData <--> Data!!!!!!!!', Data);
         this.logger.info( 'ComplicatedData <--> Data', Data);
         this.logger.info( 'ComplicatedData <--> Data[0]', Data[0]);
@@ -118,9 +108,6 @@ export class MyMarket extends Chaincode{
         const Data = stubHelper.getQueryResultAsList({
             "selector": {"Interval": verifiedArgs.Interval}
         });
-        if(!Data){
-            throw new ChaincodeError('Data does not exist');
-        }
         this.logger.info( 'ComplicatedData_Interval <--> Data!!!!!!!!', Data);
         return Data;
     }
@@ -134,9 +121,6 @@ export class MyMarket extends Chaincode{
         const Data = stubHelper.getQueryResultAsList({
             "selector": {"OwnerID": verifiedArgs.OwnerID}
         });
-        if(!Data){
-            throw new ChaincodeError('Data does not exist');
-        }
         this.logger.info( 'ComplicatedData_UserID <--> Data!!!!!!!!', Data);
         return Data;
     }
@@ -158,9 +142,6 @@ export class MyMarket extends Chaincode{
             Data = stubHelper.getQueryResultAsList({
                 "selector": {"UserID": verifiedArgs.UserID,"DataID": verifiedArgs.DataID}
             });
-        }
-        if(!Data){
-            throw new ChaincodeError('Data does not exist');
         }
         this.logger.info( 'ComplicatedData_UserID <--> Data!!!!!!!!', Data);
         return Data;
@@ -235,21 +216,7 @@ export class MyMarket extends Chaincode{
             Product: 'Fund',
             Frequency: 'Weekly',
             Interval: '1 y',
-            TimeStamp: '2018/02/22 15:28:55',
-            OwnerID: 'User2'
-        },{
-            Name: '欣興',
-            Product: 'stock',
-            Frequency: 'Daily',
-            Interval: '1 y',
-            TimeStamp: '2018/02/22 16:28:55',
-            OwnerID: 'User1'
-        },{
-            Name: '台郡',
-            Product: 'stock',
-            Frequency: 'Daily',
-            Interval: '1 y',
-            TimeStamp: '2018/02/22 17:28:55',
+            TimeStamp: '2018/02/22 14:28:55',
             OwnerID: 'User2'
         }];
         
@@ -305,11 +272,8 @@ export class MyMarket extends Chaincode{
         }];
         
         for (let i=0;i<UserDatas.length;i++){
-            const UserData: any = UserDatas[i];
-            
-            UserData.docType = 'UserData';
-            await stubHelper.putState('UserData'+i,UserData);
-            this.logger.info('Added <-->', UserData);
+            await stubHelper.putState('UserData'+i,UserDatas[i]);
+            this.logger.info('Added <-->', UserDatas[i]);
         }
     }
     
@@ -321,7 +285,7 @@ export class MyMarket extends Chaincode{
             Role: Yup.string().required()
         }));
         
-        let user = {docType: 'User', Name: verifiedArgs.Name, Phone: verifiedArgs.Phone, Role:  verifiedArgs.Rule};
+        let user = {Name: verifiedArgs.Name, Phone: verifiedArgs.Phone, Role:  verifiedArgs.Rule};
         
         await stubHelper.putState(verifiedArgs.UserID, user);
     }

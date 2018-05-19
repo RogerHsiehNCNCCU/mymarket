@@ -63,9 +63,9 @@ Fabric_Client.newDefaultKeyValueStore({ path: store_path
 	// must send the proposal to endorsing peers
 	var request = {
 		//targets: let default to the peer assigned to the client
-		chaincodeId: 'market',
-		fcn: 'createUser',//The function name to be returned when calling stub.GetFunctionAndParameters() in the target chaincode.
-		args: ['User1','Peng','0911-123-456','Admin'],//An array of string arguments specific to the chaincode's 'Invoke' method
+		chaincodeId: 'fabcar',
+		fcn: 'initLedger',//The function name to be returned when calling stub.GetFunctionAndParameters() in the target chaincode.
+		args: [],//An array of string arguments specific to the chaincode's 'Invoke' method
 		chainId: 'mychannel',
 		txId: tx_id
 	};

@@ -192,7 +192,7 @@ return{
     invoke_invokeData_Data4: function(req,res){
         console.log("controller invokeData_Data4: ")
         
-        var TimeStamp = req.params.TimeStamp;
+        var TimeStamp = req.params.TimeStamp.replace(/-/g, "/");
         
         // setup the fabric network
 //        var channel = fabric_client.newChannel('mychannel');
@@ -240,7 +240,7 @@ return{
                 //targets: let default to the peer assigned to the client
                 chaincodeId: 'market',
                 fcn: 'createData',
-                args: ['Data4','台積電','Stock','Daily','10004',TimeStamp],
+                args: ['Data4','台積電','Stock','Daily','1 y','User1',TimeStamp],
                 chainId: 'mychannel',
                 txId: tx_id
             };
@@ -351,15 +351,16 @@ return{
     invoke_invokeData_Spe: function(req,res){
         console.log("controller specific invokeData_Spe: ");
 
-        var array = req.params.imarket.split(",");
+        var array = req.params.BSD.split(",");
         console.log(array);
         
-        var Key = array[0];
+        var DataID = array[0];
         var Name = array[1];
         var Product = array[2];
         var Frequency = array[3];
-        var OwnerID = array[4];
-        var TimeStamp = array[5];
+        var Interval = array[4];
+        var OwnerID = array[5];
+        var TimeStamp = array[6].replace(/-/g, "/");
         
         //var TimeStamp = req.params.TimeStamp;
 
@@ -396,7 +397,7 @@ return{
                 //targets: let default to the peer assigned to the client
                 chaincodeId: 'market',
                 fcn: 'createData',
-                args: [Key, Name, Product, Frequency, OwnerID, TimeStamp],
+                args: [DataID, Name, Product, Frequency, Interval, OwnerID, TimeStamp],
                 chainId: 'mychannel',
                 txId: tx_id
             };

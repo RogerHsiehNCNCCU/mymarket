@@ -16,7 +16,7 @@ var ShowTime = function(){
         if(h.length==1) h = "0"+h;
         if(min.length==1) min="0"+min;
         if(s.length==1) s="0"+s;
-        document.getElementById('showbox').innerHTML = y+"-"+mon+"-"+d+" "+h+':'+min+':'+s;
+        document.getElementById('showbox').innerHTML = y+"/"+mon+"/"+d+" "+h+':'+min+':'+s;
         setTimeout('ShowTime()',1000);
 }
 
@@ -67,7 +67,7 @@ app.controller('appController',function($scope, appFactory){
     $scope.query_queryData_Spe = function(){
         console.log("into query_queryData_Spe");
         
-        var DataKey = $scope.qmarket_DataKey;
+        var DataKey = $scope.QSD_DataKey;
         
         appFactory.query_queryData_Spe(DataKey,function(data){
             $scope.query_queryData_Spe = data;
@@ -78,8 +78,24 @@ app.controller('appController',function($scope, appFactory){
             }else{
                 $("#error_query").hide();
             }
-        });
-                                      
+        });                                
+    }
+    
+    $scope.query_checkDataValid = function(){
+        console.log("into check Data Vaild");
+        
+        var DataKey = $scope.CDV_DataKey;
+        
+        appFactory.query_checkDataValid(DataKey,function(data){
+            $scope.query_checkDataValid = data;
+            console.log("I'm in appController check Data Valid "+ data);
+            if($scope.query_checkDataValid == "Could not locate Data"){
+                console.log()
+                $("error_query").show();
+            }else{
+                $("#error_query").hide();
+            }
+        });                                
     }
     
     /*
@@ -209,7 +225,7 @@ app.controller('appController',function($scope, appFactory){
     
     $scope.invoke_invokeData_Spe = function(){
         console.log("invoke_invokeData_Spe");
-        appFactory.invoke_invokeData_Spe($scope.imarket, function(data){
+        appFactory.invoke_invokeData_Spe($scope.BSD, function(data){
             $scope.invoke_invokeData_Spe = data;
             console.log("I'm in appController Specific Post "+ data);
             $("#success_create").show();
@@ -372,6 +388,17 @@ app.factory('appFactory', function($http){
         });
     }
     
+    factory.query_checkDataValid = function(DataKey,callback){
+        console.log("before factory check Data Vaild");
+        
+        var CDV = DataKey+","+y+"-"+mon+"-"+d+" "+h+':'+min+':'+s;
+        
+        $http.get('/checkDataValid/'+CDV).success(function(output){
+            console.log("I'm in factory check Data Valid " + output);
+           callback(output) 
+        });
+    }
+    
     /*
     factory.query_qGetUserSpe = function(UserID,callback){
         console.log("before factory specific query");
@@ -435,7 +462,7 @@ app.factory('appFactory', function($http){
     }
     
     factory.invoke_invokeData_Data4 = function(callback){
-        
+        //這邊時間不能用 / 區隔，因為在網址上會被看成目錄
         var TimeStamp = y+"-"+mon+"-"+d+" "+h+':'+min+':'+s;
         console.log("before factory invokeData_Data4");
         $http.get('/invokeData_Data4/'+TimeStamp).success(function(output){
@@ -446,10 +473,10 @@ app.factory('appFactory', function($http){
     
     factory.invoke_invokeData_Spe = function(data,callback){
         
-        var imarket = data.Key +","+ data.Name +","+ data.Product +","+ data.Frequency +","+ data.OwnerID +","+y+"-"+mon+"-"+d+" "+h+':'+min+':'+s;
+        var BSD = data.DataID +","+ data.Name +","+ data.Product +","+ data.Frequency +","+ data.Interval+","+ data.OwnerID +","+y+"-"+mon+"-"+d+" "+h+':'+min+':'+s;
         
         console.log("before factory Specific Post");
-        $http.get('/invokeData_Spe/'+imarket).success(function(output){
+        $http.get('/invokeData_Spe/'+BSD).success(function(output){
             console.log("I'm in factory Specific Post " + output);
             callback(output)
         });

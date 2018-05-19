@@ -109,11 +109,12 @@
         <label>Buy Specific Data(購買指定資料)</label>
         <h5 style="color:green;margin-bottom:2%" id="success_create">Success! Tx ID: {{invoke_invokeData_Spe}}</h5>
         <br>
-        Enter Data Key: <input class="form-control" type="text" placeholder="Ex: Data10" ng-model="imarket.Key">
-        Enter Product Name: <input class="form-control" type="text" placeholder="Ex: 台積電" ng-model="imarket.Name">
-        Enter Product Type: <input id="createName" class="form-control" type="text" placeholder="Ex: stock" ng-model="imarket.Product"> 
-        Enter Data Frequency: <input id="createName" class="form-control" type="text" placeholder="Ex: TRD" ng-model="imarket.Frequency">
-        Enter OwnerID: <input class="form-control" type="text" placeholder="Ex: 10005" ng-model="imarket.OwnerID">
+        Enter DataID: <input class="form-control" type="text" placeholder="Ex: Data10" ng-model="BSD.DataID">
+        Enter Product Name: <input class="form-control" type="text" placeholder="Ex: 台積電" ng-model="BSD.Name">
+        Enter Product Type: <input id="createName" class="form-control" type="text" placeholder="Ex: stock" ng-model="BSD.Product"> 
+        Enter Data Frequency: <input id="createName" class="form-control" type="text" placeholder="Ex: Daily" ng-model="BSD.Frequency">
+        Enter Time Interval: <input id="createName" class="form-control" type="text" placeholder="Ex: 1 y" ng-model="BSD.Interval">
+        Enter OwnerID: <input class="form-control" type="text" placeholder="Ex: User1" ng-model="BSD.OwnerID">
         <!--Enter Timestamp: <input class="form-control" type="text" placeholder="Ex: 20171201" ng-model="alo.Timestamp">-->
         <input id="createSubmit" type="submit" value="Create" class="btn btn-primary" ng-click="invoke_invokeData_Spe()"> 
       </div>
@@ -156,7 +157,7 @@
 
       <div class="form-group">
         <label>Query Data Data1(查詢一筆資料)</label><br>
-        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid Data Key</h5>
+        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid DataID</h5>
         
         <!--Enter a catch number: <input id="createName" class="form-control" type="text" placeholder="Ex: 3" ng-model="alo_UserID">-->
         <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="query_queryData_Data1()">
@@ -168,6 +169,7 @@
           <th>Name</th>
           <th>Product</th>
           <th>Frequency</th>
+          <th>Time Interval</th>
           <th>TimeStamp</th>
           <th>OwnerID</th>
         </tr>
@@ -176,6 +178,7 @@
           <td>{{query_queryData_Data1.Name}}</td>
           <td>{{query_queryData_Data1.Product}}</td>
           <td>{{query_queryData_Data1.Frequency}}</td>
+          <td>{{query_queryData_Data1.Interval}}</td>
           <td>{{query_queryData_Data1.TimeStamp}}</td>
           <td>{{query_queryData_Data1.OwnerID}}</td>
         </tr>
@@ -184,7 +187,7 @@
         
       <div class="form-group">
         <label>Query All Datas(查詢所有資料)</label><br>
-        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid Data Key</h5>
+        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid DataID</h5>
         
         <!--Enter a catch number: <input id="createName" class="form-control" type="text" placeholder="Ex: 3" ng-model="alo_UserID">-->
         <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="query_queryAllDatas()">
@@ -196,6 +199,7 @@
           <th>Name</th>
           <th>Product</th>
           <th>Frequency</th>
+          <th>Interval</th>
           <th>TimeStamp</th>
           <th>OwnerID</th>
         </tr>
@@ -204,6 +208,7 @@
           <td>{{query_queryAllDatas[0].Name}}</td>
           <td>{{query_queryAllDatas[0].Product}}</td>
           <td>{{query_queryAllDatas[0].Frequency}}</td>
+          <td>{{query_queryAllDatas[0].Interval}}</td>
           <td>{{query_queryAllDatas[0].TimeStamp}}</td>
           <td>{{query_queryAllDatas[0].OwnerID}}</td>
         </tr>
@@ -211,6 +216,7 @@
           <td>{{query_queryAllDatas[1].Name}}</td>
           <td>{{query_queryAllDatas[1].Product}}</td>
           <td>{{query_queryAllDatas[1].Frequency}}</td>
+          <td>{{query_queryAllDatas[1].Interval}}</td>
           <td>{{query_queryAllDatas[1].TimeStamp}}</td>
           <td>{{query_queryAllDatas[1].OwnerID}}</td>
         </tr>
@@ -218,6 +224,7 @@
           <td>{{query_queryAllDatas[2].Name}}</td>
           <td>{{query_queryAllDatas[2].Product}}</td>
           <td>{{query_queryAllDatas[2].Frequency}}</td>
+          <td>{{query_queryAllDatas[2].Interval}}</td>
           <td>{{query_queryAllDatas[2].TimeStamp}}</td>
           <td>{{query_queryAllDatas[2].OwnerID}}</td>
         </tr>
@@ -225,6 +232,7 @@
           <td>{{query_queryAllDatas[3].Name}}</td>
           <td>{{query_queryAllDatas[3].Product}}</td>
           <td>{{query_queryAllDatas[3].Frequency}}</td>
+          <td>{{query_queryAllDatas[3].Interval}}</td>
           <td>{{query_queryAllDatas[3].TimeStamp}}</td>
           <td>{{query_queryAllDatas[3].OwnerID}}</td>
         </tr>
@@ -232,6 +240,7 @@
           <td>{{query_queryAllDatas[4].Name}}</td>
           <td>{{query_queryAllDatas[4].Product}}</td>
           <td>{{query_queryAllDatas[4].Frequency}}</td>
+          <td>{{query_queryAllDatas[4].Interval}}</td>
           <td>{{query_queryAllDatas[4].TimeStamp}}</td>
           <td>{{query_queryAllDatas[4].OwnerID}}</td>
         </tr>
@@ -240,9 +249,9 @@
         
       <div class="form-group">
         <label>Query a Specific Data(查詢資料)</label><br>
-        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid User Id</h5>
+        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid DataID</h5>
         
-        Enter an Data Key: <input id="createName" class="form-control" type="text" placeholder="Ex: Data1" ng-model="qmarket_DataKey">
+        Enter a DataID: <input id="createName" class="form-control" type="text" placeholder="Ex: Data1" ng-model="QSD_DataKey">
         <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="query_queryData_Spe()">
       </div>
 
@@ -252,6 +261,7 @@
           <th>Name</th>
           <th>Product</th>
           <th>Frequency</th>
+          <th>Time Interval</th>
           <th>TimeStamp</th>
           <th>OwnerID</th>
         </tr>
@@ -260,8 +270,42 @@
           <td>{{query_queryData_Spe.Name}}</td>
           <td>{{query_queryData_Spe.Product}}</td>
           <td>{{query_queryData_Spe.Frequency}}</td>
+          <td>{{query_queryData_Spe.Interval}}</td>
           <td>{{query_queryData_Spe.TimeStamp}}</td>
           <td>{{query_queryData_Spe.OwnerID}}</td>
+        </tr>
+      </table>
+        
+      <div class="form-group">
+        <label>Check Data Valid(查詢資料是否在使用期限)</label><br>
+        <h5 style="color:red;margin-bottom:2%" id="error_query">Error: Please enter a valid DataID</h5>
+        
+        Enter a DataID: <input id="createName" class="form-control" type="text" placeholder="Ex: Data1" ng-model="CDV_DataKey">
+        <input id="querySubmit" type="submit" value="Query" class="btn btn-primary" ng-click="query_checkDataValid()">
+      </div>
+
+      <table id="query_checkDataVaild" class="table" align="center">
+
+        <tr>
+          <th>Name</th>
+          <th>Product</th>
+          <th>Frequency</th>
+          <th>Time Interval</th>
+          <th>TimeStamp</th>
+          <th>NowTimeStamp</th>
+          <th>OwnerID</th>
+          <th>Use Right</th>
+        </tr>
+
+        <tr>
+          <td>{{query_checkDataValid.Name}}</td>
+          <td>{{query_checkDataValid.Product}}</td>
+          <td>{{query_checkDataValid.Frequency}}</td>
+          <td>{{query_checkDataValid.Interval}}</td>
+          <td>{{query_checkDataValid.TimeStamp}}</td>
+          <td>{{query_checkDataValid.NowTimeStamp}}</td>
+          <td>{{query_checkDataValid.OwnerID}}</td>
+          <td>{{query_checkDataValid.Valid}}</td>
         </tr>
       </table>
         
